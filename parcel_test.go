@@ -96,7 +96,7 @@ func TestSetStatus(t *testing.T) {
 	if err != nil {
 		require.NoError(t, err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 	store := NewParcelStore(db)
 	parcel := getTestParcel()
 
@@ -125,7 +125,7 @@ func TestGetByClient(t *testing.T) {
 	if err != nil {
 		require.NoError(t, err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 	store := NewParcelStore(db)
 
 	parcels := []Parcel{
