@@ -53,16 +53,10 @@ func TestAddGetDelete(t *testing.T) {
 
 	// delete
 	err = store.Delete(parcel.Number)
-	if err != nil {
-		t.Fatalf("failed to delete parcel: %v", err)
-	}
-
+	require.NoError(t, err)
 	stored, err = store.Get(parcel.Number)
-	if err != nil {
-		t.Fatalf("failed to get parcel: %v", err)
-	}
-
-	require.Equal(t, sql.ErrNoRows, err)
+	require.ErrorIs(t, err, sql.ErrNoRows)
+	require.Empty(t, stored)
 }
 
 // TestSetAddress проверяет обновление адреса
